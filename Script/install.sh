@@ -7,7 +7,7 @@ echo "2) This script must be run as root user"
 echo " "
 echo "Steps:"
 echo "Installs package dependencies:"
-echo "   - python2.7        python2.7"
+echo "   - python3          python3.5"
 echo "   - python-pip       alternative Python package installer"
 echo "   - git              fast, scalable, distributed revision control system"
 echo "   - libi2c-dev       userspace I2C programming library development files"
@@ -51,23 +51,24 @@ echo "======================="
 echo " "
 echo "Installing Dependencies"
 echo "======================="
-sudo apt-get install python2.7 -y
-sudo apt-get install python-pip git libi2c-dev python-serial i2c-tools python-smbus minicom python-dev libfreetype6-dev libjpeg-dev -y
-yes | sudo pip install --upgrade pip
-yes | sudo pip install image
+sudo apt-get install build-essential -y
+sudo apt-get install python3 -y
+sudo apt-get install python3-pip git libi2c-dev python3-serial i2c-tools python3-smbus minicom python3-dev libfreetype6-dev -y
+yes | sudo pip3 install --upgrade pip
+yes | sudo pip3 install image
 # yes | sudo pip uninstall pillow
 # yes | sudo pip install --no-cache-dir pillow
-yes | sudo pip install pillow
+yes | sudo pip3 install pillow
 
 if [ -d RPi.GPIO-0.5.11 ]; then
     cd RPi.GPIO-0.5.11
-    python setup.py install
+    python3 setup.py install
     cd ..
 fi
 
 if [ -d psutil-0.5.0 ]; then
     cd psutil-0.5.0
-    python setup.py install
+    python3 setup.py install
     cd ..
 fi
 
@@ -95,15 +96,15 @@ sudo adduser ${USER_NAME} i2c
 
 echo " "
 echo "Install smbus for python"
-sudo apt-get install python-smbus -y
+sudo apt-get install python3-smbus -y
 
 echo " "
 echo "Making libraries global . . ."
 echo "============================="
-if [ -d /usr/lib/python2.7/dist-packages ]; then
-    sudo cp ${DIR_PATH}/Script/bakebit.pth /usr/lib/python2.7/dist-packages/bakebit.pth
+if [ -d /usr/lib/python3/dist-packages ]; then
+    sudo cp ${DIR_PATH}/Script/bakebit.pth /usr/lib/python3/dist-packages/bakebit.pth
 else
-    echo "/usr/lib/python2.7/dist-packages not found, exiting"
+    echo "/usr/lib/python3/dist-packages not found, exiting"
     exit 1
 fi
 

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #
 # BakeBit library for the basic functions of BakeBit 128x64 OLED (http://wiki.friendlyarm.com/wiki/index.php/BakeBit_-_OLED_128x64)
 # v1.0
@@ -49,8 +49,8 @@ SeeedOLED_Height		=64  #64  Pixels
 SeeedOLED_Max_X                 =SeeedOLED_Width-1
 SeeedOLED_Max_Y                 =SeeedOLED_Height-1
                                 
-PAGE_MODE                       =0x01
-HORIZONTAL_MODE                 =0x02
+PAGE_MODE                       =0o01
+HORIZONTAL_MODE                 =0o02
                                                             
 SeeedOLED_Address               =0x3d
 SeeedOLED_Command_Mode          =0x00
@@ -363,7 +363,7 @@ def drawImage(image):
     pix = image.load()
     # Iterate through the memory pages
     bitList = []
-    pages=SeeedOLED_Height/8
+    pages=SeeedOLED_Height//8
     for page in range(pages):
         # Iterate through all x axis columns.
         for x in range(SeeedOLED_Width):
