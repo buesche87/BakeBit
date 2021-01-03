@@ -181,11 +181,11 @@ def draw_page():
             tempI = tempI/1000
         tempStr = "CPU TEMP: %sC" % str(tempI)
 
-        draw.text((x, top+5),       "IP: " + str(IPAddress, encoding='utf-8', errors='ignore'),  font=smartFont, fill=255)
-        draw.text((x, top+5+12),    str(CPU, encoding='utf-8', errors='ignore'), font=smartFont, fill=255)
-        draw.text((x, top+5+24),    str(MemUsage, encoding='utf-8', errors='ignore'),  font=smartFont, fill=255)
-        draw.text((x, top+5+36),    str(Disk, encoding='utf-8', errors='ignore'),  font=smartFont, fill=255)
-        draw.text((x, top+5+48),    tempStr,  font=smartFont, fill=255)
+        draw.text((x, top+2),       "IP: " + str(IPAddress, encoding='utf-8', errors='ignore'),  font=smartFont, fill=255)
+        draw.text((x, top+2+12),    str(CPU, encoding='utf-8', errors='ignore'), font=smartFont, fill=255)
+        draw.text((x, top+2+24),    str(MemUsage, encoding='utf-8', errors='ignore'),  font=smartFont, fill=255)
+        draw.text((x, top+2+36),    str(Disk, encoding='utf-8', errors='ignore'),  font=smartFont, fill=255)
+        draw.text((x, top+2+48),    tempStr,  font=smartFont, fill=255)
 
     # Draw Shutdown -- no
 
@@ -213,7 +213,7 @@ def draw_page():
 
     elif page_index==5:
         draw.text((2, 2),  'Shutting down',  font=fontb14, fill=255)
-        draw.text((2, 20),  'Please wait...',  font=font11, fill=255)
+        draw.text((2, 22),  'Please wait...',  font=font11, fill=255)
 
     # Draw Change Wifi - Wifi Client
 
@@ -226,8 +226,8 @@ def draw_page():
         draw.rectangle((2,32,width-4,32+16), outline=0, fill=0)
         draw.text((4, 34),  'Hotspot',  font=smartFont, fill=255)
         
-        draw.rectangle((2,48,width-4,48+16), outline=0, fill=0)
-        draw.text((4, 50),  'NanoGateway',  font=smartFont, fill=255)
+        draw.rectangle((2,46,width-4,46+16), outline=0, fill=0)
+        draw.text((4, 48),  'NanoGate',  font=smartFont, fill=255)
 
     # Draw Chang Wifi - Hotspot
 
@@ -240,10 +240,10 @@ def draw_page():
         draw.rectangle((2,32,width-4,32+16), outline=0, fill=255)
         draw.text((4, 34),  'Hotspot',  font=smartFont, fill=0)
         
-        draw.rectangle((2,48,width-4,48+16), outline=0, fill=0)
-        draw.text((4, 50),  'NanoGateway',  font=smartFont, fill=255)
+        draw.rectangle((2,46,width-4,46+16), outline=0, fill=0)
+        draw.text((4, 48),  'NanoGate',  font=smartFont, fill=255)
 
-    # Draw Chang Wifi - NanoGateway
+    # Draw Chang Wifi - NanoGate
 
     elif page_index==8:
         draw.text((2, 2),  'Wifi Mode',  font=fontb14, fill=255)
@@ -254,26 +254,26 @@ def draw_page():
         draw.rectangle((2,32,width-4,32+16), outline=0, fill=0)
         draw.text((4, 34),  'Hotspot',  font=smartFont, fill=255)
         
-        draw.rectangle((2,48,width-4,48+16), outline=0, fill=255)
-        draw.text((4, 50),  'NanoGateway',  font=smartFont, fill=0)
+        draw.rectangle((2,46,width-4,46+16), outline=0, fill=255)
+        draw.text((4, 48),  'NanoGate',  font=smartFont, fill=0)
 
     # Draw Change to Wifi Client
  
     elif page_index==9:
         draw.text((2, 2),  'Wifi Client',  font=fontb14, fill=255)
-        draw.text((2, 20),  'Please wait...',  font=font11, fill=255)
+        draw.text((2, 22),  'Please wait...',  font=font11, fill=255)
 
     # Draw Change to Hotspot
  
     elif page_index==10:
         draw.text((2, 2),  'Hotspot',  font=fontb14, fill=255)
-        draw.text((2, 20),  'Please wait...',  font=font11, fill=255)
+        draw.text((2, 22),  'Please wait...',  font=font11, fill=255)
 
-    # Draw Change to NanoGateway
+    # Draw Change to NanoGate
  
     elif page_index==11:
-        draw.text((2, 2),  'NanoGateway',  font=fontb14, fill=255)
-        draw.text((2, 20),  'Please wait...',  font=font11, fill=255)
+        draw.text((2, 2),  'NanoGate',  font=fontb14, fill=255)
+        draw.text((2, 22),  'Please wait...',  font=font11, fill=255)
 
     # Draw DHCP Leases
 
@@ -281,9 +281,6 @@ def draw_page():
         draw.text((2, 2),  'Last 4 DHCP Leases',  font=font11, fill=255) 
 
         os.system('ldhcp')
-	
-        cmd = "wc -l /tmp/dhcp.list | awk '{print $1}'"
-        anzahl = subprocess.check_output(cmd, shell = True)
 	
         cmd = "sed -n 1p /tmp/dhcp.list"
         txt = subprocess.check_output(cmd, shell = True)
@@ -375,7 +372,7 @@ def receive_signal(signum, stack):
                 update_page_index(9)
             elif page_index==7: # Change Wifi to Hotspot
                 update_page_index(10)
-            elif page_index==8: # Change Wifi NanoGateway
+            elif page_index==8: # Change Wifi NanoGate
                 update_page_index(11)
             else:
                 update_page_index(0)
@@ -401,16 +398,19 @@ def receive_signal(signum, stack):
                 update_page_index(7)
             elif page_index==7: # Hotspot
                 update_page_index(8)
-            elif page_index==8: # NanoGateway
+            elif page_index==8: # NanoGate
                 update_page_index(6)
             draw_page()
-        else:
+        elif  pageSleepCountdown>0:
             update_page_index(3)
+            draw_page()
+        else:
+            update_page_index(0)
         draw_page()
 
     pageSleepCountdown = pageSleep #user pressed a button, reset the sleep counter
 
-image0 = Image.open('nano_home_logo_oled.png').convert('1')
+image0 = Image.open('/usr/local/nanohome/NanoHatOLED/BakeBit/Software/Python/nano_home_logo_oled.png').convert('1')
 oled.drawImage(image0)
 time.sleep(5)
 
@@ -462,7 +462,7 @@ while True:
             lock.acquire()
             is_drawing = drawing
             lock.release()
-            os.system('wmod -nanogw &') # Change Wifi Mode - NanoGateway
+            os.system('wmod -nanogate &') # Change Wifi Mode - NanoGate
             time.sleep(2)
             update_page_index(0)
             draw_page()

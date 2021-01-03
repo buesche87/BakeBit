@@ -1,10 +1,12 @@
-Metadata-Version: 1.1
+Metadata-Version: 1.2
 Name: psutil
 Version: 0.5.0
 Summary: A process utilities module for Python
 Home-page: http://code.google.com/p/psutil/
-Author: Giampaolo Rodola
-Author-email: g.rodola <at> gmail <dot> com
+Author: Giampaolo Rodola, Jay Loden
+Author-email: psutil@googlegroups.com
+Maintainer: Giampaolo Rodola
+Maintainer-email: g.rodola <at> gmail <dot> com
 License: License :: OSI Approved :: BSD License
 Download-URL: http://psutil.googlecode.com/files/psutil-0.5.0.tar.gz
 Description: ===========
